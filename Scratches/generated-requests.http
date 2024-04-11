@@ -1,5 +1,5 @@
 
-###
+### 文字
 POST http://localhost:8080/v1/chat/completions
 Content-Type: application/json
 
@@ -12,4 +12,14 @@ Content-Type: application/json
       "content": "who are you"
     }
   ]
+}
+
+### 图片
+POST http://localhost:8080/v1/images/generations
+Content-Type: application/json
+
+{
+  "prompt": "小猫\n",
+  "n": 1,
+  "size": "256x256"
 }

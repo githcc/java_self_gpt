@@ -1,11 +1,11 @@
 package com.cc.controller;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -15,24 +15,46 @@ import reactor.core.publisher.Flux;
 public class API {
 
     private final WebClient webClient;
+    private final RestTemplate restTemplate;
 
-    public API(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://api.openai-proxy.com").build();
+    private static final String OPENAI_API_KEY = "Bearer YOUR_API_KEY_HERE";
+    private static final String OPENAI_API_URL = "https://api.openai.com/v1";
+
+    public API(WebClient.Builder webClientBuilder, RestTemplate restTemplate) {
+        this.webClient = webClientBuilder.baseUrl(OPENAI_API_URL).build();
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping(value = "/chat/completions", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> generateStream(@RequestBody String body) {
         HttpHeaders headers = new HttpHeaders();
-        // Set your desired headers
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer <key>");
+        headers.set("Authorization", OPENAI_API_KEY);
         headers.set("content-type", "application/json");
 
         return webClient.post()
-                .uri("/v1/chat/completions")
+                .uri("/chat/completions")
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .body(BodyInserters.fromValue(body))
                 .retrieve()
                 .bodyToFlux(String.class);
+    }
+
+
+    @PostMapping(value = "/images/generations")
+    public ResponseEntity<String> generateImage(@RequestBody String body) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", OPENAI_API_KEY);
+        headers.set("content-type", "application/json");
+
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+
+        ResponseEntity<String> response = this.restTemplate.exchange(
+                OPENAI_API_URL+"/images/generations",
+                HttpMethod.POST,
+                request,
+                String.class
+        );
+
+        return response;
     }
 }
