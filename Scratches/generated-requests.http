@@ -19,7 +19,7 @@ POST http://localhost:8080/v1/images/generations
 Content-Type: application/json
 
 {
-  "prompt": "小猫\n",
+  "prompt": "小猫",
   "n": 1,
   "size": "256x256"
 }
