@@ -5,6 +5,6 @@
 ## 技术说明
 1. 使用springboot
 2. 使用flux
-
-## 例子
-![](gif/20240403_193331.gif)
+3. 使用IDEA HTTP Client
+4. 使用有道云语音生成接口
+   1. [接口](https://dict.youdao.com/dictvoice?audio=本语音使用有道词典生成&le=cn)
