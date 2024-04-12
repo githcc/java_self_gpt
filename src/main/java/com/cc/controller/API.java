@@ -1,11 +1,11 @@
 package com.cc.controller;
 
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -18,7 +18,7 @@ public class API {
     private final RestTemplate restTemplate;
 
     private static final String OPENAI_API_KEY = "Bearer YOUR_API_KEY_HERE";
-    private static final String OPENAI_API_URL = "https://api.openai.com/v1";
+    private static final String OPENAI_API_URL = "https://api.openai-proxy.com/v1";
 
     public API(WebClient.Builder webClientBuilder, RestTemplate restTemplate) {
         this.webClient = webClientBuilder.baseUrl(OPENAI_API_URL).build();
@@ -48,13 +48,36 @@ public class API {
 
         HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = this.restTemplate.exchange(
+        return this.restTemplate.exchange(
                 OPENAI_API_URL+"/images/generations",
                 HttpMethod.POST,
                 request,
                 String.class
         );
+    }
 
-        return response;
+    @PostMapping(value = "/audio/transcriptions")
+    public ResponseEntity<String> transcribeAudio(@RequestPart("file") MultipartFile file, @RequestParam("model") String model, @RequestParam("temperature") String temperature
+    , @RequestParam("response_format") String response_format, @RequestParam("language") String language) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", OPENAI_API_KEY);
+        headers.set("content-type", "multipart/form-data");
+        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("file", file.getResource());
+        requestBody.add("model", model);
+        requestBody.add("temperature", temperature);
+        requestBody.add("response_format", response_format);
+        requestBody.add("language", language);
+
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(requestBody, headers);
+
+
+        return this.restTemplate.exchange(
+                OPENAI_API_URL+"/audio/transcriptions",
+                HttpMethod.POST,
+                request,
+                String.class
+        );
     }
 }
