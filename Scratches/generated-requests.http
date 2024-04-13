@@ -24,7 +24,7 @@ Content-Type: application/json
   "size": "256x256"
 }
 
-### 音频
+### 音频1 Speech to Text
 POST http://localhost:8080/v1/audio/transcriptions
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -58,3 +58,14 @@ Content-Type: text/plain
 
 < dictvoice.mp3
 --WebAppBoundary--
+
+
+### 音频2 Text to Speech
+POST http://localhost:8080/v1/audio/speech
+Content-Type: application/json
+
+{
+  "model": "tts-1",
+  "voice": "alloy",
+  "input": "Today is a wonderful day to build something people love!"
+}

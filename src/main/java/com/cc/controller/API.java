@@ -77,4 +77,20 @@ public class API {
                 String.class
         );
     }
+
+    @PostMapping(value = "/audio/speech")
+    public ResponseEntity<byte[]> tts(@RequestBody String body) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", OPENAI_API_KEY);
+        headers.set("content-type", MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+
+        return this.restTemplate.exchange(
+                OPENAI_API_URL + "/audio/speech",
+                HttpMethod.POST,
+                request,
+                byte[].class
+        );
+    }
 }
