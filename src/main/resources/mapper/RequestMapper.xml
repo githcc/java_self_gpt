@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.generator.mapper.RequestMapper">
+
+    <resultMap id="BaseResultMap" type="com.cc.generator.domain.Request">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="mapping" column="mapping" jdbcType="VARCHAR"/>
+            <result property="contentText" column="content_text" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,mapping,content_text,
+        content_blob
+    </sql>
+</mapper>

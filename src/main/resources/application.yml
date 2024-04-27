@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://119.91.23.137:3306/gpt
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    use-generated-keys: true # 启用自动生成主键
+    jdbc-type-for-null: 'null' # 将 null 值映射为 'null'
+  global-config:
+    db-config:
+      id-type: auto # 自增主键的生成策略
