@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("v1")
-public class API {
+public class OpenAIController {
 
     private final WebClient webClient;
     private final RestTemplate restTemplate;
@@ -28,7 +28,7 @@ public class API {
     private static final String OPENAI_API_KEY = "Bearer YOUR_API_KEY_HERE";
     private static final String OPENAI_API_URL = "https://api.openai-proxy.com/v1";
 
-    public API(WebClient.Builder webClientBuilder, RestTemplate restTemplate) {
+    public OpenAIController(WebClient.Builder webClientBuilder, RestTemplate restTemplate) {
         this.webClient = webClientBuilder.baseUrl(OPENAI_API_URL).build();
         this.restTemplate = restTemplate;
     }

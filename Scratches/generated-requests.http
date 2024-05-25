@@ -1,6 +1,15 @@
+### 短链生成
+POST {{host}}/u
+Content-Type: application/json
+
+"123"
+
+### 短链跳转
+GET {{host}}/u/1d2480
+
 
 ### 文字
-POST http://localhost:8080/v1/chat/completions
+POST {{host}}/v1/chat/completions
 Content-Type: application/json
 
 {
@@ -15,17 +24,17 @@ Content-Type: application/json
 }
 
 ### 图片
-POST http://localhost:8080/v1/images/generations
+POST {{host}}/v1/images/generations
 Content-Type: application/json
 
 {
-  "prompt": "小猫",
+  "prompt": "小狗",
   "n": 1,
   "size": "256x256"
 }
 
-### 音频1 Speech to Text
-POST http://localhost:8080/v1/audio/transcriptions
+###  音频1 Speech to Text
+POST {{host}}/v1/audio/transcriptions
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -61,11 +70,58 @@ Content-Type: text/plain
 
 
 ### 音频2 Text to Speech
-POST http://localhost:8080/v1/audio/speech
+POST {{host}}/v1/audio/speech
 Content-Type: application/json
 
 {
   "model": "tts-1",
   "voice": "alloy",
-  "input": "Today is a wonderful day to build something people love!"
+  "input": "Unless required by applicable law or agreed to in writing, software"
 }
+
+
+###
+POST {{host}}/v1/models/gemini-pro:generateContent
+Content-Type: application/json
+
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "who are you"
+        }
+      ]
+    }
+  ]
+}
+
+<> 2024-05-23T180637.200.json
+
+###
+POST {{host}}/v1/models/gemini-pro:streamGenerateContent
+Content-Type: application/json
+
+{
+  "contents": [
+    {
+      "role": "model",
+      "parts": [
+        {
+          "text": "我是openai"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "who are you"
+        }
+      ]
+    }
+  ]
+}
+
+
