@@ -124,4 +124,112 @@ Content-Type: application/json
   ]
 }
 
+###
+POST {{host}}/v1beta/models/gemini-1.5-flash:generateContent?key=$GOOGLE_API_KEY
+Content-Type: application/json
 
+{
+  "generationConfig": {
+    "temperature": 0.6,
+    "topP": 1
+  },
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_NONE"
+    }
+  ],
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "我输入一个内容，因为我对此一无所知，需要快速学习，列举出学习路线"
+        }
+      ],
+      "role": "user"
+    },
+    {
+      "parts": [
+        {
+          "text": ""
+        }
+      ],
+      "role": "model"
+    },
+    {
+      "parts": [
+        {
+          "text": "人工智能"
+        }
+      ],
+      "role": "user"
+    }
+  ]
+}
+
+###
+POST {{host}}/v1beta/models/gemini-1.5-pro-latest:generateContent?alt=sse&key=AIzaSyB6WE3gEeaGIT1SMOuFeU_k1_d7TPa7Bsw
+Content-Type: application/json
+
+{
+  "generationConfig": {
+    "temperature": 0.6,
+    "topP": 1
+  },
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_NONE"
+    },
+    {
+      "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+      "threshold": "BLOCK_NONE"
+    }
+  ],
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "我输入一个内容，因为我对此一无所知，需要快速学习，列举出学习路线"
+        }
+      ],
+      "role": "user"
+    },
+    {
+      "parts": [
+        {
+          "text": ""
+        }
+      ],
+      "role": "model"
+    },
+    {
+      "parts": [
+        {
+          "text": "人工智能"
+        }
+      ],
+      "role": "user"
+    }
+  ]
+}

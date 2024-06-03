@@ -48,12 +48,13 @@ public class GeminiController {
     }
 
 
-    @PostMapping(value = "/models/gemini-pro:streamGenerateContent", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PostMapping(value = "/models/models/{model}:streamGenerateContent?alt=sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamGenerateContent(@RequestBody String body) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-type", MediaType.APPLICATION_JSON_VALUE);
+        headers.set("X-Goog-Api-Key", GEMINI_API_KEY);
         Request requestContent = new Request();
-        requestContent.setMapping("/models/gemini-pro:generateContent");
+        requestContent.setMapping("models/gemini-pro:streamGenerateContent?alt=sse");
         requestContent.setContentText(body);
         requestService.saveOrUpdate(requestContent);
 
