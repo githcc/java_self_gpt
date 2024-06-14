@@ -11,6 +11,7 @@ GET {{host}}/u/1d2480
 ### 文字
 POST {{host}}/v1/chat/completions
 Content-Type: application/json
+Authorization: Bearer
 
 {
   "model": "gpt-3.5-turbo-1106",
